@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:authentication/features/authentication/data/repositories/user_repository.dart';
 import 'package:authentication/features/authentication/presentation/cubit/authentication_states.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,15 @@ TextEditingController email = TextEditingController();
   GlobalKey<FormState> fKeyn = GlobalKey<FormState>();
   TextEditingController phoneup = TextEditingController();
   GlobalKey<FormState> fKeyph = GlobalKey<FormState>();
+  Uint8List? profilePic;
+  String ?filename;
+
+  uploadProfilePIC(Uint8List image, String fileName){
+  profilePic = image;
+  filename = fileName; 
+  emit(UploadingImageState());
+}
+
 
 signIn()async{
   final Response=await userRepository.signIn(email: email.text, password: pass.text);
@@ -32,6 +43,17 @@ signIn()async{
   ,( usermodel)=>emit(SuccessSignInState()));
 }
 
+signUp()async{
+  final Response=await userRepository.signUp(email: emailup.text,
+   password: passup.text, 
+   name: nameup.text, 
+   phone: phoneup.text,
 
+
+    confirmPassword: cpassup.text, 
+    profilePic:profilePic!, location: {"name":"methalfa","address":"meet halfa","coordinates":[30.1572709,31.224779]});
+    Response.fold((error)=>emit(FailureSignUpState(errormessage:error)),
+     (SignUpModel)=>emit(SuccessSignUpState(message: SignUpModel.message)));
+}
 
 }

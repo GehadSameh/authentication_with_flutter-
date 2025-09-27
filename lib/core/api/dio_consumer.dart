@@ -1,5 +1,6 @@
 import 'package:authentication/core/api/api_consumer.dart';
 import 'package:authentication/core/api/end_points.dart';
+import 'package:authentication/core/errors/handle_exceptions.dart';
 import 'package:dio/dio.dart';
 
 class DioConsumer extends ApiConsumer{
@@ -11,7 +12,7 @@ dio.interceptors.add(LogInterceptor(requestBody: true,responseBody: true));
   }
   
   @override
-  Future delete({required String path, Object? data, Map<String,dynamic>? queryParamters, bool isFormData = false}) {
+  Future delete({required String path, dynamic data, Map<String,dynamic>? queryParamters, bool isFormData = false}) {
     
     throw UnimplementedError();
   }
@@ -29,13 +30,19 @@ dio.interceptors.add(LogInterceptor(requestBody: true,responseBody: true));
   }
   
   @override
-  Future post({required String path, Object? data, Map<String,dynamic>? queryParamters, bool isFormData = false}) async{
+  Future post({required String path,dynamic data, Map<String,dynamic>? queryParamters, bool isFormData = false}) async{
     
     try{
-      final Response=await dio.post(path,data: data,queryParameters: queryParamters);
+      final Response=await dio.post(path,data: data,queryParameters: queryParamters,options: Options(
+       
+        headers: isFormData
+            ? null
+            : {"Content-Type": "application/json"},
+      ),);
+      
     return Response.data;
-    }catch(e){
-      e.toString();
+    }on DioException catch(e){
+      handleDioEXCEPTIONS(e);
     }
   }
 

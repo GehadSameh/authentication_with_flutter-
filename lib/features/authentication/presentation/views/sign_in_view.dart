@@ -1,5 +1,6 @@
 import 'package:authentication/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:authentication/features/authentication/presentation/cubit/authentication_states.dart';
+import 'package:authentication/features/authentication/presentation/views/sign_up_view.dart';
 import 'package:authentication/features/authentication/presentation/widgets/custom_TextFrom.dart';
 import 'package:authentication/features/authentication/presentation/widgets/secret_textForm.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class SignInView extends StatelessWidget {
                       const Text("if you don't have an account"),
                       TextButton(
                         onPressed: () {
-                          // Navigator.pushNamed(context, SignUp.routeName);
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpView()));
                         },
                         child: const Text("Sign Up"),
                       ),
