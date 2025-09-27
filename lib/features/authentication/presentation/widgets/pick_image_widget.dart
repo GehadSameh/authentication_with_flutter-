@@ -38,9 +38,9 @@ if (result != null) {
   final path = result.files.first.path!;
   File file = File(path);
   Uint8List fileBytes = await file.readAsBytes();
-  String fileName = result.files.first.name;
+  
 
-  context.read<AuthenticationCubit>().uploadProfilePIC(fileBytes, fileName);
+  context.read<AuthenticationCubit>().uploadProfilePIC(fileBytes);
 }
 
 

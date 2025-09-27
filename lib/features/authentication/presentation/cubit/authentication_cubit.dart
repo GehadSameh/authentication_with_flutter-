@@ -28,11 +28,10 @@ TextEditingController email = TextEditingController();
   TextEditingController phoneup = TextEditingController();
   GlobalKey<FormState> fKeyph = GlobalKey<FormState>();
   Uint8List? profilePic;
-  String ?filename;
-
-  uploadProfilePIC(Uint8List image, String fileName){
+ 
+  uploadProfilePIC(Uint8List image){
   profilePic = image;
-  filename = fileName; 
+ 
   emit(UploadingImageState());
 }
 
